@@ -1,9 +1,21 @@
 
 import java.util.ArrayList;
 
+// TODO: might move to separate file later for better encapsulation
+enum SubscriptionLevel {
+    NORMAL(0), SILVER(0.05), GOLD(0.15), PLATINUM(0.10);
+    private final double discount;
+    SubscriptionLevel(double discount){ this.discount = discount; }
+    public double getDiscount(){ return discount; }
+    public double applyDiscount(double subtotal){ return subtotal * (1 - discount); }
+    public String toString() {
+        return this.name();
+    }
+}
+
 public class User {
     private String name;
-    private String subscription;
+    private SubscriptionLevel level;
     private Cart cart;
     private ArrayList<Order> orders;
     private String shippingAddressLine1;
@@ -19,9 +31,9 @@ public class User {
     private String billingAddressZip;
     private String billingAddressCountry;
 
-    public User(String name, String subscription) {
+    public User(String name, SubscriptionLevel level) {
         this.name = name;
-        this.subscription = subscription;  // normal, gold, platinum, silver membership
+        this.level = level;  // normal, gold, platinum, silver membership
         this.cart = new Cart();
         this.orders = new ArrayList<>();
     }
@@ -30,12 +42,12 @@ public class User {
         return name;
     }
 
-    public String getSubscription() {
-        return subscription;
+    public SubscriptionLevel getSubscriptionLevel() {
+        return level;
     }
 
-    public void setSubscription(String role) {
-        this.subscription = role;
+    public void setSubscriptionLevel(SubscriptionLevel level) {
+        this.level = level;
     }
 
     public void viewCart() {
@@ -80,7 +92,7 @@ public class User {
     }
 
     public void checkout() {
-        Order order = new Order(cart, this.subscription);
+        Order order = new Order(cart, this.level);
         order.setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
         order.setBillingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
         order.setOrderStatus("Order Placed");

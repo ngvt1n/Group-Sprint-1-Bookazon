@@ -27,7 +27,7 @@ public class Bookazon {
 
     public void viewUsers() {
         for (User user : users) {
-            System.out.println(user.getName() + " - Role: " + user.getSubscription());
+            System.out.println(user.getName() + " - Role: " + user.getSubscriptionLevel().name());
         }
     }
 
@@ -47,8 +47,8 @@ public class Bookazon {
         book.setPaperback(isPaperback);
     }
 
-    public void updateRole(User user, String role) {
-        user.setSubscription(role);
+    public void updateRole(User user, SubscriptionLevel role) {
+        user.setSubscriptionLevel(role);
     }
 
     
@@ -62,8 +62,8 @@ public class Bookazon {
         bookazon.addBook(new Book("1984", "George Orwell", 1949, 8.99, true));
 
         // create users
-        bookazon.addUser(new User("Alice", "normal"));
-        bookazon.addUser(new User("Bob", "gold"));
+        bookazon.addUser(new User("Alice", SubscriptionLevel.NORMAL));
+        bookazon.addUser(new User("Bob", SubscriptionLevel.GOLD));
 
         // add books to cart
         bookazon.users.get(0).addToCart(bookazon.books.get(0), 1);

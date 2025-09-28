@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class Bookazon {
@@ -73,9 +72,12 @@ public class Bookazon {
         bookazon.users.get(0).viewCart();
 
         // set shipping address and billing address
-        bookazon.users.get(0).setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
-        bookazon.users.get(0).setBillingAddress("456 Elm St", "", "Springfield", "IL", "62702", "USA");
+        Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
+        Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
 
+        // gets the addresses.
+        bookazon.users.get(0).setShippingAddress(shipping);
+        bookazon.users.get(0).setBillingAddress(billing);
         // checkout
         bookazon.users.get(0).checkout();
 

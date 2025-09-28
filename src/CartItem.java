@@ -25,11 +25,26 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public boolean equals(CartItem item) {
-        return this.itemName.equals(item.getName());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartItem)) return false;
+        CartItem other = (CartItem) o;
+        return itemName != null && itemName.equals(other.itemName);
     }
 
-    public double getTotalPrice() {
-        return price * quantity;
+    /*
+     * Fix for: 
+     * Java collections (like ArrayList.remove) call equals(Object), 
+     * so Cart.removeItem(item) may fail to match.
+     */
+
+    @Override
+    public int hashCode() {
+        return itemName == null ? 0 : itemName.hashCode();
+    }
+
+    public double getTotalPrice() { 
+        return price * quantity; 
     }
 }

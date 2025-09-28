@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class Bookazon {
@@ -21,12 +20,15 @@ public class Bookazon {
 
     public void viewBooks() {
         for (Book book : books) {
+            // If Book still has printBookDetails(), this works.
+            // If you removed printing from Book, use a helper to format instead.
             book.printBookDetails();
         }
     }
 
     public void viewUsers() {
         for (User user : users) {
+            // NamedSubscription.toString() returns the code (e.g., "gold")
             System.out.println(user.getName() + " - Role: " + user.getSubscription());
         }
     }
@@ -39,7 +41,8 @@ public class Bookazon {
         users.remove(user);
     }
 
-    public void updateBookDetails(Book book, String newTitle, String newAuthor, int newYearPublished, double newPrice, boolean isPaperback) {
+    public void updateBookDetails(Book book, String newTitle, String newAuthor,
+                                  int newYearPublished, double newPrice, boolean isPaperback) {
         book.setTitle(newTitle);
         book.setAuthor(newAuthor);
         book.setYearPublished(newYearPublished);
@@ -47,40 +50,43 @@ public class Bookazon {
         book.setPaperback(isPaperback);
     }
 
+    // CHANGE: wrap role string with NamedSubscription
     public void updateRole(User user, String role) {
-        user.setSubscription(role);
+        user.setSubscription(new NamedSubscription(role));
     }
 
-    
     public static void main(String[] args) {
-        
+
         Bookazon bookazon = new Bookazon();
-        
+
         // create books
         bookazon.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
         bookazon.addBook(new Book("To Kill a Mockingbird", "Harper Lee", 1960, 7.99, false));
         bookazon.addBook(new Book("1984", "George Orwell", 1949, 8.99, true));
 
-        // create users
-        bookazon.addUser(new User("Alice", "normal"));
-        bookazon.addUser(new User("Bob", "gold"));
+        // NEW: create one pricing policy instance
+        PricingPolicy policy = new TablePricingPolicy();
+
+        // create users with Subscription + PricingPolicy
+        // NOTE: this matches the new User constructor: User(String, Subscription, PricingPolicy)
+        bookazon.addUser(new User("Alice", new NamedSubscription("normal"), policy));
+        bookazon.addUser(new User("Bob",   new NamedSubscription("gold"),   policy));
 
         // add books to cart
         bookazon.users.get(0).addToCart(bookazon.books.get(0), 1);
         bookazon.users.get(0).addToCart(bookazon.books.get(1), 2);
 
-        // view cart
+        // view cart (if your Cart prints; if not, format via a helper)
         bookazon.users.get(0).viewCart();
 
-        // set shipping address and billing address
+        // set shipping and billing
         bookazon.users.get(0).setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
         bookazon.users.get(0).setBillingAddress("456 Elm St", "", "Springfield", "IL", "62702", "USA");
 
-        // checkout
+        // checkout (Order now uses PricingPolicy internally)
         bookazon.users.get(0).checkout();
 
-        // view order details
+        // view order details (if your Order prints; if not, format via a helper)
         bookazon.users.get(0).viewOrders();
-        
     }
 }

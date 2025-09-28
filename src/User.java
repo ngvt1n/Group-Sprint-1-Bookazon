@@ -3,7 +3,13 @@ import java.util.ArrayList;
 
 public class User {
     private String name;
-    private String subscription;
+    // private String subscription;
+
+    // added in place of String subscription
+    
+    private Subscription subscription;
+    private final PricingPolicy pricingPolicy;
+
     private Cart cart;
     private ArrayList<Order> orders;
     private String shippingAddressLine1;
@@ -19,9 +25,11 @@ public class User {
     private String billingAddressZip;
     private String billingAddressCountry;
 
-    public User(String name, String subscription) {
+    // replace your old constructor with:
+    public User(String name, Subscription subscription, PricingPolicy pricingPolicy) {
         this.name = name;
-        this.subscription = subscription;  // normal, gold, platinum, silver membership
+        this.subscription = subscription;
+        this.pricingPolicy = pricingPolicy;
         this.cart = new Cart();
         this.orders = new ArrayList<>();
     }
@@ -30,13 +38,17 @@ public class User {
         return name;
     }
 
-    public String getSubscription() {
-        return subscription;
+    
+
+    public Subscription getSubscription() { 
+        return subscription; 
     }
 
-    public void setSubscription(String role) {
-        this.subscription = role;
+
+    public void setSubscription(Subscription sub) { 
+        this.subscription = sub; 
     }
+
 
     public void viewCart() {
         cart.viewCartDetails();
@@ -80,7 +92,7 @@ public class User {
     }
 
     public void checkout() {
-        Order order = new Order(cart, this.subscription);
+        Order order = new Order(cart, this.subscription, this.pricingPolicy);
         order.setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
         order.setBillingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
         order.setOrderStatus("Order Placed");

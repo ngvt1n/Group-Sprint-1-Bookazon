@@ -3,14 +3,12 @@ public abstract class Book {
     protected String author;
     protected int yearPublished;
     protected double price;
-    protected boolean isPaperback;
 
-    public Book(String title, String author, int yearPublished, double price, boolean isPaperback) {
+    public Book(String title, String author, int yearPublished, double price) {
         this.title = title;
         this.author = author;
         this.yearPublished = yearPublished;
         this.price = price;
-        this.isPaperback = isPaperback;
     }
 
     // Getters
@@ -30,10 +28,6 @@ public abstract class Book {
         return price;
     }
 
-    public boolean isPaperback() {
-        return isPaperback;
-    }
-
     // Setters
     public void setTitle(String title) {
         this.title = title;
@@ -51,9 +45,6 @@ public abstract class Book {
         this.price = price;
     }
 
-    public void setPaperback(boolean isPaperback) {
-        this.isPaperback = isPaperback;
-    }
 
     // Abstract method: subclasses must define how details are displayed
     public abstract void displayInfo();

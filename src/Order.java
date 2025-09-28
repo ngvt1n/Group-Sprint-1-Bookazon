@@ -56,8 +56,9 @@ public class Order {
         System.out.println("Date Shipped: " + dateShipped);
         System.out.println("User Name: " + userName);
         System.out.println("Order Status: " + orderStatus);
-        System.out.println("Shipping Address: " + (shippingAddress != null ? shippingAddress.formatForLabel() : "N/A"));
-        System.out.println("Billing Address: " + (billingAddress != null ? billingAddress.formatForLabel() : "N/A"));
+        //THIS NEEDS TO IMPLEMENTED BY WHOEVER IS FIXING PRINTING.
+        //System.out.println("Shipping Address: " + (shippingAddress != null ? shippingAddress.formatForLabel() : "N/A"));
+        //System.out.println("Billing Address: " + (billingAddress != null ? billingAddress.formatForLabel() : "N/A"));
         System.out.println("Order Price: $" + orderPrice);
     }
 

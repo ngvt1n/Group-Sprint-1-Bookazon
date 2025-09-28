@@ -79,11 +79,17 @@ public class Bookazon {
         // view cart (if your Cart prints; if not, format via a helper)
         bookazon.users.get(0).viewCart();
 
-        // set shipping and billing
-        bookazon.users.get(0).setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
-        bookazon.users.get(0).setBillingAddress("456 Elm St", "", "Springfield", "IL", "62702", "USA");
+        // set shipping address and billing address
+        Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
+        Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
 
-        // checkout (Order now uses PricingPolicy internally)
+        // gets the addresses.
+        bookazon.users.get(0).setShippingAddress(shipping);
+        bookazon.users.get(0).setBillingAddress(billing);
+
+        // checkout
+        bookazon.users.get(0).checkout();
+
         bookazon.users.get(0).checkout();
 
         // view order details (if your Order prints; if not, format via a helper)

@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class User {
@@ -12,18 +11,8 @@ public class User {
 
     private Cart cart;
     private ArrayList<Order> orders;
-    private String shippingAddressLine1;
-    private String shippingAddressLine2;
-    private String shippingAddressCity;
-    private String shippingAddressState;
-    private String shippingAddressZip;
-    private String shippingAddressCountry;
-    private String billingAddressLine1;
-    private String billingAddressLine2;
-    private String billingAddressCity;
-    private String billingAddressState;
-    private String billingAddressZip;
-    private String billingAddressCountry;
+    private Address shippingAddress;
+    private Address billingAddress;
 
     // replace your old constructor with:
     public User(String name, Subscription subscription, PricingPolicy pricingPolicy) {
@@ -54,22 +43,23 @@ public class User {
         cart.viewCartDetails();
     }
 
-    public void setShippingAddress(String line1, String line2, String city, String state, String zip, String country) {
-        this.shippingAddressLine1 = line1;
-        this.shippingAddressLine2 = line2;
-        this.shippingAddressCity = city;
-        this.shippingAddressState = state;
-        this.shippingAddressZip = zip;
-        this.shippingAddressCountry = country;
+    public void setShippingAddress(Address address) {
+        //Sets shipping address.
+        this.shippingAddress = address;
     }
 
-    public void setBillingAddress(String line1, String line2, String city, String state, String zip, String country) {
-        this.billingAddressLine1 = line1;
-        this.billingAddressLine2 = line2;
-        this.billingAddressCity = city;
-        this.billingAddressState = state;
-        this.billingAddressZip = zip;
-        this.billingAddressCountry = country;
+    public void setBillingAddress(Address address) {
+        //Sets billing address.
+        this.billingAddress = address;
+    }
+
+    public Address getBillingAddress() {
+        //Returns billing address. 
+        return billingAddress;
+    }
+    public Address getShippingAddress() {
+        //Returns Shipping address. 
+        return shippingAddress;
     }
 
     public void addToCart(Book book, int quantity) {
@@ -92,14 +82,15 @@ public class User {
     }
 
     public void checkout() {
-        Order order = new Order(cart, this.subscription, this.pricingPolicy);
-        order.setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
-        order.setBillingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
-        order.setOrderStatus("Order Placed");
-        order.setDateCreated("2024-01-01");
-        order.setUserName(this.name);
-        orders.add(order);
-    }
+    Order order = new Order(cart, this.subscription, this.pricingPolicy);
+    Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
+    Address billing  = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
+    order.setShippingAddress(shipping);
+    order.setBillingAddress(billing);
+    order.setOrderStatus("Order Placed");
+    order.setDateCreated("2024-01-01");
+    order.setUserName(this.name);
+    orders.add(order);
 }
 
-
+}

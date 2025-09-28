@@ -79,6 +79,16 @@ public class User {
         }
     }
 
+    public void printCartWith(PrintManager pm) {
+        pm.print(cart); 
+    }
+
+    public void printOrdersWith(PrintManager pm) {
+        for (Order order : orders) {
+            pm.print(order); 
+        }
+    }
+
     public void checkout() {
         Order order = new Order(cart, this.subscription);
         order.setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");

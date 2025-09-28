@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Order {
     private String dateCreated;
@@ -34,6 +35,11 @@ public class Order {
         this.shippingAddressCountry = country;
     }
 
+    public ArrayList<String> getShippingAddress(){
+        ArrayList<String> shippingDetails = new ArrayList<>(Arrays.asList(this.shippingAddressLine1, this.shippingAddressLine2, this.shippingAddressCity, this.shippingAddressState, this.shippingAddressZip, this.shippingAddressCountry));
+        return shippingDetails;
+    }
+
     public void setBillingAddress(String line1, String line2, String city, String state, String zip, String country) {
         this.billingAddressLine1 = line1;
         this.billingAddressLine2 = line2;
@@ -42,21 +48,41 @@ public class Order {
         this.billingAddressZip = zip;
         this.billingAddressCountry = country;
     }
+    public ArrayList<String> getBillingAddress(){
+        ArrayList<String> billingDetails = new ArrayList<>(Arrays.asList(this.billingAddressLine1, this.billingAddressLine2, this.billingAddressCity, this.billingAddressState, this.billingAddressZip, this.billingAddressCountry));
+        return billingDetails;
+    }
 
     public void setOrderStatus(String status) {
         this.orderStatus = status;
+    }
+
+    public String getOrderStatus(){
+        return this.orderStatus;
     }
 
     public void setDateCreated(String date) {
         this.dateCreated = date;
     }
 
+    public String getDateCreated(){
+        return this.dateCreated;
+    }
+
     public void setDateShipped(String date) {
         this.dateShipped = date;
     }
 
+    public String getDateShipped(){
+        return this.dateShipped;
+    }
+
     public void setUserName(String name) {
         this.userName = name;
+    }
+    
+    public String getUserName(){
+        return this.userName;
     }
 
     public void printOrderDetails() {

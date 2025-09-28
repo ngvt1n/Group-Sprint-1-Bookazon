@@ -69,8 +69,22 @@ public class Bookazon {
         bookazon.users.get(0).addToCart(bookazon.books.get(0), 1);
         bookazon.users.get(0).addToCart(bookazon.books.get(1), 2);
 
+        PrintManager pM = new PrintManager(Book.class, new BookPrinter());
+        pM.register(CartItem.class, new CartItemPrinter());
+        pM.register(Cart.class, new CartPrinter(pM));
+        pM.register(Order.class, new OrderPrinter());
+
+        // viewing the books in bookazon
+        for (Book b : bookazon.books) {
+            pM.print(b);
+            System.out.println();
+        }
+
         // view cart
-        bookazon.users.get(0).viewCart();
+        // bookazon.users.get(0).viewCart();
+        System.out.println("== Alice's Cart ==");
+        bookazon.users.get(0).printCartWith(pM);
+        System.out.println();
 
         // set shipping address and billing address
         bookazon.users.get(0).setShippingAddress("123 Main St", "", "Springfield", "IL", "62701", "USA");
@@ -80,7 +94,8 @@ public class Bookazon {
         bookazon.users.get(0).checkout();
 
         // view order details
-        bookazon.users.get(0).viewOrders();
+        // bookazon.users.get(0).viewOrders();
+        bookazon.users.get(0).printOrdersWith(pM);
         
     }
 }

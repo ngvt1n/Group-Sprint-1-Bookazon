@@ -5,13 +5,13 @@ public final class PrintManager {
 
   private final Map<Class <?>, Formatter<?>> register = new HashMap<>();
 
-  public <T> PrintManager(Class<T> type, Formatter<T> formatter){
-    register(type, formatter);
+  public <T> PrintManager(Class<T> type, Formatter<T> formatType){
+    register(type, formatType);
 
   }
 
-  public <T> void register(Class<T> type, Formatter<T> formatter) {
-    register.put(type, formatter);
+  public <T> void register(Class<T> type, Formatter<T> formatType) {
+    register.put(type, formatType);
   }
 
   private Formatter<Object> findFormatter(Class<?> clas) {

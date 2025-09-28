@@ -5,19 +5,23 @@
 
 
 public class TablePricingPolicy implements PricingPolicy {
+  // discount factors (no magic numbers in code paths)
+  private static final double FACTOR_GOLD     = 0.85; // 15% off
+  private static final double FACTOR_PLATINUM = 0.90; // 10% off
+  private static final double FACTOR_SILVER   = 0.95; //  5% off
+  private static final double FACTOR_NORMAL   = 1.00; //  0% off
+
   @Override
   public double apply(double subtotal, Subscription sub) {
     if (subtotal < 0) throw new IllegalArgumentException("subtotal < 0");
-    String code = sub.code();     // should be lower-case from NamedSubscription
-    double factor = 1.0;          // default: no discount
-
-    if ("gold".equals(code)) {
-      factor = 0.85;              // 15% off
-    } else if ("platinum".equals(code)) {
-      factor = 0.90;              // 10% off
-    } else if ("silver".equals(code)) {
-      factor = 0.95;              // 5% off
-    }
+    String code = sub.code(); // already lower-case from NamedSubscription
+    double factor = switch (code) {
+      case "gold"     -> FACTOR_GOLD;
+      case "platinum" -> FACTOR_PLATINUM;
+      case "silver"   -> FACTOR_SILVER;
+      default         -> FACTOR_NORMAL;
+    };
     return subtotal * factor;
   }
 }
+

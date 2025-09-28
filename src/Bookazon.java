@@ -19,12 +19,6 @@ public class Bookazon {
         users.add(user);
     }
 
-    public void viewBooks() {
-        for (Book book : books) {
-            book.printBookDetails();
-        }
-    }
-
     public void viewUsers() {
         for (User user : users) {
             System.out.println(user.getName() + " - Role: " + user.getSubscription());
@@ -57,9 +51,9 @@ public class Bookazon {
         Bookazon bookazon = new Bookazon();
         
         // create books
-        bookazon.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
-        bookazon.addBook(new Book("To Kill a Mockingbird", "Harper Lee", 1960, 7.99, false));
-        bookazon.addBook(new Book("1984", "George Orwell", 1949, 8.99, true));
+        bookazon.addBook(new PhysicalBook("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
+        bookazon.addBook(new PhysicalBook("To Kill a Mockingbird", "Harper Lee", 1960, 7.99, false));
+        bookazon.addBook(new PhysicalBook("1984", "George Orwell", 1949, 8.99, true));
 
         // create users
         bookazon.addUser(new User("Alice", "normal"));

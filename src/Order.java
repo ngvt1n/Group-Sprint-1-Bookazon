@@ -11,12 +11,10 @@ public class Order {
     private double orderPrice;
 
     public Order(Cart cart, Subscription subscription, PricingPolicy pricingPolicy) {
-    this.items = new ArrayList<>(cart.getItems()); // Defensive copy
+    this.items = new java.util.ArrayList<>(cart.getItems()); // defensive copy
     double subtotal = 0.0;
-    for (CartItem item : items) {
-        subtotal += item.getTotalPrice();
-    }
-    this.orderPrice = pricingPolicy.apply(subtotal, subscription);
+    for (CartItem it : items) subtotal += it.getTotalPrice();
+    this.orderPrice = subscription.price(subtotal, pricingPolicy); // double-dispatch call
 }
 
 

@@ -5,6 +5,8 @@
  */
 public interface Subscription {
   String code();                                   // e.g., "gold"
-  double price(double subtotal, PricingPolicy p);  // double-dispatch entry
+  double price(double subtotal, PricingPolicy p);  // delegates to policy
+  double factor();                                 // = BASE_MULTIPLIER - percent_off
 }
+
 

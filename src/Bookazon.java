@@ -1,3 +1,12 @@
+/**
+ * Class Name: Bookazon.java
+ *
+ * Description: Controller of the Bookazon system. Manages the media catalog 
+ *              and users, delegates printing to a PrintManager, and supports 
+ *              adding, removing, viewing, and updating records. 
+ *
+ */
+
 import java.util.ArrayList;
 
 public class Bookazon {
@@ -16,20 +25,24 @@ public class Bookazon {
     }
 
     public void addMedia(AbstractMedia media) {
+        //adds media to the catalog.
         catalog.add(media);
     }
 
     public void addUser(User user) {
+        //adds users to the user list.
         users.add(user);
     }
 
     public void viewCatalog() {
+        //prints the media of the catalogue.
         for (AbstractMedia media: catalog) {
             printManager.print(media);
         }
     }
 
     public void viewUsers() {
+        //prints the users of the user list. 
         for (User user : users) {
             printManager.print(user);
         }
@@ -44,6 +57,7 @@ public class Bookazon {
     }
 
     public void updateRole(User user, String role) {
+        //sets the subsription for the inputed user. 
         user.setSubscription(role);
     }
 
@@ -97,10 +111,10 @@ public class Bookazon {
         alice.setShippingAddress(shipping);
         alice.setBillingAddress(billing);
 
-        //Checkout.
+        //checkout.
         alice.checkout(new Order(alice.getCart(), alice.getSubscription()));
 
-        // view order details
+        //view order details
         alice.printOrdersWith(pM);
     }
 }

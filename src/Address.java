@@ -1,18 +1,8 @@
 /**
  * Class Name: Address.java
  * 
- * Purpose: Encapsulates address information for users and orders, including 
- *          formatting for display on shipping labels.
- *
- * Description: This class stores common address fields such as line1, line2, 
- *              city, state, zip code, and country. It provides getters and 
- *              setters for each field and includes a utility method to 
- *              format the address for label printing.
- *
- * Author: Robbie Bennett
- * Date Created: 09/27/2025
- * Last Modified: 09/28/2025
- *
+ * Description: Container to hold address information 
+ *              (utilizing java records.)
  */
 
 public record Address(
@@ -24,6 +14,7 @@ public record Address(
     String country) {
         @Override
         public String toString() {
+            //Formats information into a string format.
             return "Shipping Address: " + 
             line1 + "\n" + 
             line2 + "\n" + 

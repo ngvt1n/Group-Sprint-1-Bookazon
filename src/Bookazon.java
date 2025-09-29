@@ -48,10 +48,12 @@ public class Bookazon {
         book.setPaperback(isPaperback);
     }
 
-    // CHANGE: wrap role string with NamedSubscription
-    public void updateRole(User user, String role) {
-        user.setSubscription(new NamedSubscription(role));
+    
+    // Bookazon.java (now, typed subscriptions)
+    public void updateRole(User user, Subscription sub) {
+        user.setSubscription(sub);
     }
+
 
     public void updateRole(User user, String role) {
         user.setSubscription(new NamedSubscription(role));
@@ -66,13 +68,9 @@ public class Bookazon {
         bookazon.addBook(new PhysicalBook("To Kill a Mockingbird", "Harper Lee", 1960, 7.99, false));
         bookazon.addBook(new PhysicalBook("1984", "George Orwell", 1949, 8.99, true));
 
-        // NEW: create one pricing policy instance
         PricingPolicy policy = new TablePricingPolicy();
-
-        // create users with Subscription + PricingPolicy
-        // NOTE: this matches the new User constructor: User(String, Subscription, PricingPolicy)
-        bookazon.addUser(new User("Alice", new NamedSubscription("normal"), policy));
-        bookazon.addUser(new User("Bob",   new NamedSubscription("gold"),   policy));
+        bookazon.addUser(new User("Alice", new NormalSubscription(), policy));
+        bookazon.addUser(new User("Bob",   new GoldSubscription(),   policy));
 
         // add books to cart
         bookazon.users.get(0).addToCart(bookazon.books.get(0), 1);

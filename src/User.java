@@ -10,19 +10,15 @@ public class User {
     private Address shippingAddress;
     private Address billingAddress;
 
-    public User(String name, String subscription, Cart cart) {
+    public User(String name, String subscription) {
         this.name = name;
         this.subscription = subscription;
-        this.cart = cart; 
+        this.cart = new Cart(); 
         this.orders = new ArrayList<>();
     }
 
     public String getName() {
         return name;
-    }
-
-    public Cart getCart(){
-        return this.cart;
     }
 
     public String getSubscription() {
@@ -59,6 +55,10 @@ public class User {
     public void addToCart(Book book, int quantity) {
         cart.addItem(new CartItem(book.getTitle(), book.getPrice(), quantity));
     }
+    
+    public Cart getCart(){
+        return this.cart;
+    }
 
     public void removeFromCart(Book book) {
         for (CartItem item : cart.getItems()) {
@@ -75,9 +75,8 @@ public class User {
         }
     }
 
-    public void checkout(Order order) {
+   public void checkout(Order order) {
         // Finalizes checkout by validating addresses, filling order details, and saving it to the user's order history.
-        
         if (shippingAddress == null || billingAddress == null) {
             System.out.println("Error: Shipping and billing addresses must be set before checkout.");
             return;

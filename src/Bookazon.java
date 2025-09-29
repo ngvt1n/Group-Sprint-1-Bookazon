@@ -61,8 +61,10 @@ public class Bookazon {
         bookazon.addBook(new Book("1984", "George Orwell", 1949, 8.99, true));
 
         // create users
-        User alice = new User("Alice", "normal", new Cart());
-        User bob = new User("Bob", "gold", new Cart());
+
+        User alice = new User("Alice", "normal");
+        User bob = new User("Bob", "gold");
+        
         bookazon.addUser(alice);
         bookazon.addUser(bob);
 
@@ -76,6 +78,7 @@ public class Bookazon {
         // set shipping address and billing address
         Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
         Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
+
         alice.setShippingAddress(shipping);
         alice.setBillingAddress(billing);
 

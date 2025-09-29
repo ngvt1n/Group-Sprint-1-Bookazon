@@ -1,3 +1,9 @@
+/*
+ * Class Name: CDPrinter 
+ * 
+ * Class Description: This class implemets the Printer interface. This class will be used to format the details of CD which can be used by the users to view the CD. 
+ */
+
 public class CDPrinter implements Printer<CD> {
   
   @Override

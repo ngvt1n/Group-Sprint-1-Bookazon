@@ -4,24 +4,28 @@
  */
 
 
+/**
+ * Branch-free policy
+ * 
+ */
 public class TablePricingPolicy implements PricingPolicy {
-  // discount factors (no magic numbers in code paths)
+  private static final double FACTOR_NORMAL   = 1.00;
+  private static final double FACTOR_SILVER   = 0.95; // 5% off
   private static final double FACTOR_GOLD     = 0.85; // 15% off
   private static final double FACTOR_PLATINUM = 0.90; // 10% off
-  private static final double FACTOR_SILVER   = 0.95; //  5% off
-  private static final double FACTOR_NORMAL   = 1.00; //  0% off
 
-  @Override
-  public double apply(double subtotal, Subscription sub) {
-    if (subtotal < 0) throw new IllegalArgumentException("subtotal < 0");
-    String code = sub.code(); // already lower-case from NamedSubscription
-    double factor = switch (code) {
-      case "gold"     -> FACTOR_GOLD;
-      case "platinum" -> FACTOR_PLATINUM;
-      case "silver"   -> FACTOR_SILVER;
-      default         -> FACTOR_NORMAL;
-    };
-    return subtotal * factor;
+  @Override public double apply(double subtotal, NormalSubscription   s) { 
+    return subtotal * FACTOR_NORMAL; 
+  }
+  @Override public double apply(double subtotal, SilverSubscription   s) { 
+    return subtotal * FACTOR_SILVER; 
+  }
+  @Override public double apply(double subtotal, GoldSubscription     s) { 
+    return subtotal * FACTOR_GOLD; 
+  }
+  @Override public double apply(double subtotal, PlatinumSubscription s) { 
+    return subtotal * FACTOR_PLATINUM; 
   }
 }
+
 

@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+
 public class User {
     private String name;
     private String subscription;
@@ -11,8 +12,8 @@ public class User {
 
     public User(String name, String subscription) {
         this.name = name;
-        this.subscription = subscription;  // normal, gold, platinum, silver membership
-        this.cart = new Cart();
+        this.subscription = subscription;
+        this.cart = new Cart(); 
         this.orders = new ArrayList<>();
     }
 
@@ -86,7 +87,6 @@ public class User {
 
    public void checkout(Order order) {
         // Finalizes checkout by validating addresses, filling order details, and saving it to the user's order history.
-
         if (shippingAddress == null || billingAddress == null) {
             System.out.println("Error: Shipping and billing addresses must be set before checkout.");
             return;

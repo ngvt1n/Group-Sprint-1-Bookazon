@@ -1,4 +1,4 @@
-public class OrderPrinter implements Formatter<Order> {
+public class OrderPrinter implements Printer<Order> {
   
   @Override
   public void printFormat(Order order){

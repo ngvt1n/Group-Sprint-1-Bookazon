@@ -60,6 +60,8 @@ public class Bookazon {
         // set shipping address and billing address
         Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
         Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
+        AddressValidator.validate(shipping);
+        AddressValidator.validate(billing);
 
         // gets the addresses.
         bookazon.users.get(0).setShippingAddress(shipping);
@@ -69,6 +71,5 @@ public class Bookazon {
 
         // view order details
         bookazon.users.get(0).viewOrders();
-        
     }
 }

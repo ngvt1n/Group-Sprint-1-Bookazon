@@ -61,12 +61,14 @@ public class Bookazon {
         bookazon.addBook(new Book("1984", "George Orwell", 1949, 8.99, true));
 
         // create users
-        bookazon.addUser(new User("Alice", "normal"));
-        bookazon.addUser(new User("Bob", "gold"));
+        User alice = new User("Alice", "normal", new Cart());
+        User bob = new User("Bob", "gold", new Cart());
+        bookazon.addUser(alice);
+        bookazon.addUser(bob);
 
         // add books to cart
-        bookazon.users.get(0).addToCart(bookazon.books.get(0), 1);
-        bookazon.users.get(0).addToCart(bookazon.books.get(1), 2);
+        alice.addToCart(bookazon.books.get(0), 1);
+        alice.addToCart(bookazon.books.get(1), 2);
 
         // view cart
         bookazon.users.get(0).viewCart();
@@ -74,15 +76,13 @@ public class Bookazon {
         // set shipping address and billing address
         Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
         Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
+        alice.setShippingAddress(shipping);
+        alice.setBillingAddress(billing);
 
-        // gets the addresses.
-        bookazon.users.get(0).setShippingAddress(shipping);
-        bookazon.users.get(0).setBillingAddress(billing);
         // checkout
-        bookazon.users.get(0).checkout();
+        alice.checkout(new Order(alice.getCart(), alice.getSubscription()));
 
         // view order details
-        bookazon.users.get(0).viewOrders();
-        
+        alice.viewOrders();     
     }
 }

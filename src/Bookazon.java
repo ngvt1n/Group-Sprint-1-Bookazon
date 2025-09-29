@@ -77,15 +77,14 @@ public class Bookazon {
         bookazon.addUser(bob);
 
         // add books to cart
-        // alice.addToCart(bookazon.books.get(0), 1);
-        // alice.addToCart(bookazon.books.get(1), 2);
+        alice.addToCart(bookazon.catalog.get(0), 1);
+        alice.addToCart(bookazon.catalog.get(1), 2);
 
         // viewing the catalog in bookazon
         bookazon.viewCatalog();
 
         // viewing the users in bookazon
         bookazon.viewUsers();
-
 
         // view Alice's cart
         System.out.println("== Alice's Cart ==");

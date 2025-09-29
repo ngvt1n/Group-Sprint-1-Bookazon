@@ -1,4 +1,4 @@
-interface Formatter<T>{
+interface Printer<T>{
 
   void printFormat(T bookazonClassType);
 

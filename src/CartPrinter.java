@@ -1,5 +1,5 @@
 
-public final class CartPrinter implements Formatter<Cart>{
+public final class CartPrinter implements Printer<Cart>{
 
   private final PrintManager printManager;
 

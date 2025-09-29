@@ -1,4 +1,4 @@
-public class UserPrinter implements Formatter<User>{
+public class UserPrinter implements Printer<User>{
 
   @Override
   public void printFormat(User curUser){

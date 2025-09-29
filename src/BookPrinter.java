@@ -1,4 +1,4 @@
-public class BookPrinter implements Formatter<Book>{
+public class BookPrinter implements Printer<Book>{
 
   @Override
   public void printFormat(Book book) {

@@ -1,4 +1,4 @@
-public class CartItemPrinter implements Formatter<CartItem> {
+public class CartItemPrinter implements Printer<CartItem> {
 
   @Override
   public void printFormat(CartItem item){

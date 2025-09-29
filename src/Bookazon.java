@@ -51,7 +51,7 @@ public class Bookazon {
     public static void main(String[] args) {
 
         // registering the different formatters for printing
-        PrintManager pM = new PrintManager(Book.class, new BookPrinter());
+        PrintManager pM = new PrintManager();
         pM.register(CartItem.class, new CartItemPrinter());
         pM.register(Cart.class, new CartPrinter(pM));
         pM.register(Order.class, new OrderPrinter());

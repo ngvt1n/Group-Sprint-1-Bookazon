@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class User {
@@ -53,6 +54,10 @@ public class User {
     public void addToCart(Book book, int quantity) {
         cart.addItem(new CartItem(book.getTitle(), book.getPrice(), quantity));
     }
+    
+    public Cart getCart(){
+        return this.cart;
+    }
 
     public void removeFromCart(Book book) {
         for (CartItem item : cart.getItems()) {
@@ -69,14 +74,17 @@ public class User {
         }
     }
 
-    public void checkout() {
-        Order order = new Order(cart, this.subscription);
-        Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
-        Address billing = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
-        order.setShippingAddress(shipping);
-        order.setBillingAddress(billing);
+   public void checkout(Order order) {
+        // Finalizes checkout by validating addresses, filling order details, and saving it to the user's order history.
+
+        if (shippingAddress == null || billingAddress == null) {
+            System.out.println("Error: Shipping and billing addresses must be set before checkout.");
+            return;
+        }
+        order.setShippingAddress(shippingAddress);
+        order.setBillingAddress(billingAddress);
         order.setOrderStatus("Order Placed");
-        order.setDateCreated("2024-01-01");
+        order.setDateCreated(LocalDate.now().toString()); 
         order.setUserName(this.name);
         orders.add(order);
     }

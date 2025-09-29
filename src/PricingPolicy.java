@@ -1,15 +1,12 @@
 /**
  * creator: rishit chatterjee
- * Strategy that computes the final price from a subtotal and a subscription tier.
- * Pure function: no I/O or hidden state.
- * 
+ * Strategy for computing final price for a given subscription tier.
+ * Overloads avoid if/switch by using double dispatch.
  */
 public interface PricingPolicy {
-  /**
-   * @param subtotal      pre-discount total (>= 0)
-   * @param subscription  subscription tier influencing discounts
-   * @return final price after discounts
-   * @throws IllegalArgumentException if subtotal < 0
-   */
-  double apply(double subtotal, Subscription subscription);
+  double apply(double subtotal, NormalSubscription s);
+  double apply(double subtotal, SilverSubscription s);
+  double apply(double subtotal, GoldSubscription s);
+  double apply(double subtotal, PlatinumSubscription s);
 }
+

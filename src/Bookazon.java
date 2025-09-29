@@ -20,9 +20,7 @@ public class Bookazon {
 
     public void viewBooks() {
         for (Book book : books) {
-            // If Book still has printBookDetails(), this works.
-            // If you removed printing from Book, use a helper to format instead.
-            book.printBookDetails();
+            book.printBookDetails(); // keep simple for now
         }
     }
 
@@ -42,7 +40,7 @@ public class Bookazon {
     }
 
     public void updateBookDetails(Book book, String newTitle, String newAuthor,
-                                  int newYearPublished, double newPrice, boolean isPaperback) {
+                              int newYearPublished, double newPrice, boolean isPaperback) {
         book.setTitle(newTitle);
         book.setAuthor(newAuthor);
         book.setYearPublished(newYearPublished);
@@ -55,14 +53,18 @@ public class Bookazon {
         user.setSubscription(new NamedSubscription(role));
     }
 
+    public void updateRole(User user, String role) {
+        user.setSubscription(new NamedSubscription(role));
+    }
+
     public static void main(String[] args) {
 
         Bookazon bookazon = new Bookazon();
 
         // create books
-        bookazon.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
-        bookazon.addBook(new Book("To Kill a Mockingbird", "Harper Lee", 1960, 7.99, false));
-        bookazon.addBook(new Book("1984", "George Orwell", 1949, 8.99, true));
+        bookazon.addBook(new PhysicalBook("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
+        bookazon.addBook(new PhysicalBook("To Kill a Mockingbird", "Harper Lee", 1960, 7.99, false));
+        bookazon.addBook(new PhysicalBook("1984", "George Orwell", 1949, 8.99, true));
 
         // NEW: create one pricing policy instance
         PricingPolicy policy = new TablePricingPolicy();

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Order {
     private String dateCreated;
@@ -67,16 +66,12 @@ public class Order {
         return this.userName;
     }
 
-    public void printOrderDetails() {
-        System.out.println("Order Details:");
-        System.out.println("Date Created: " + dateCreated);
-        System.out.println("Date Shipped: " + dateShipped);
-        System.out.println("User Name: " + userName);
-        System.out.println("Order Status: " + orderStatus);
-        //THIS NEEDS TO IMPLEMENTED BY WHOEVER IS FIXING PRINTING.
-        //System.out.println("Shipping Address: " + (shippingAddress != null ? shippingAddress.formatForLabel() : "N/A"));
-        //System.out.println("Billing Address: " + (billingAddress != null ? billingAddress.formatForLabel() : "N/A"));
-        System.out.println("Order Price: $" + orderPrice);
+    public double getOrderPrice(){
+        return this.orderPrice;
+    }
+
+    public void printOrderDetails(PrintManager pm) {
+        pm.print(this);
     }
 
     public double calculatePrice(String subscription) {

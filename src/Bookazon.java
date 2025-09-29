@@ -4,10 +4,15 @@ public class Bookazon {
 
     private ArrayList<Book> books;
     private ArrayList<User> users;
+    private PrintManager printManager;
 
     public Bookazon() {
         books = new ArrayList<>();
         users = new ArrayList<>();
+    }
+
+    public void setPrintManager(PrintManager pm){
+        this.printManager = pm;
     }
 
     public void addBook(Book book) {
@@ -20,13 +25,13 @@ public class Bookazon {
 
     public void viewBooks() {
         for (Book book : books) {
-            book.printBookDetails();
+            printManager.print(book);
         }
     }
 
     public void viewUsers() {
         for (User user : users) {
-            System.out.println(user.getName() + " - Role: " + user.getSubscription());
+            printManager.print(user);
         }
     }
 
@@ -52,8 +57,16 @@ public class Bookazon {
 
     
     public static void main(String[] args) {
+
+        // registering the different formatters for printing
+        PrintManager pM = new PrintManager(Book.class, new BookPrinter());
+        pM.register(CartItem.class, new CartItemPrinter());
+        pM.register(Cart.class, new CartPrinter(pM));
+        pM.register(Order.class, new OrderPrinter());
+        pM.register(User.class, new UserPrinter());
         
         Bookazon bookazon = new Bookazon();
+        bookazon.setPrintManager(pM);
         
         // create books
         bookazon.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
@@ -68,19 +81,15 @@ public class Bookazon {
         bookazon.users.get(0).addToCart(bookazon.books.get(0), 1);
         bookazon.users.get(0).addToCart(bookazon.books.get(1), 2);
 
-        PrintManager pM = new PrintManager(Book.class, new BookPrinter());
-        pM.register(CartItem.class, new CartItemPrinter());
-        pM.register(Cart.class, new CartPrinter(pM));
-        pM.register(Order.class, new OrderPrinter());
 
         // viewing the books in bookazon
-        for (Book b : bookazon.books) {
-            pM.print(b);
-            System.out.println();
-        }
+        bookazon.viewBooks();
 
-        // view cart
-        // bookazon.users.get(0).viewCart();
+        // viewing the users in bookazon
+        bookazon.viewUsers();
+
+
+        // view Alice's cart
         System.out.println("== Alice's Cart ==");
         bookazon.users.get(0).printCartWith(pM);
         System.out.println();

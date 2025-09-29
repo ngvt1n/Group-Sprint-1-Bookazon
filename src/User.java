@@ -63,9 +63,9 @@ public class User {
         }
     }
 
-    public void viewOrders() {
+    public void viewOrders(PrintManager pm) {
         for (Order order : orders) {
-            order.printOrderDetails();
+            pm.print(order);
         }
     }
 

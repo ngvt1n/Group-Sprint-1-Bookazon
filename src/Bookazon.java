@@ -69,20 +69,22 @@ public class Bookazon {
         bookazon.addMedia(new CD("Kind of Blue", 14.99, "Miles Davis", 1959));
 
         // create users
-        bookazon.addUser(new User("Alice", "normal"));
-        bookazon.addUser(new User("Bob", "gold"));
 
-        // add catalog to cart
-        bookazon.users.get(0).addToCart(bookazon.catalog.get(0), 1);
-        bookazon.users.get(0).addToCart(bookazon.catalog.get(1), 2);
+        User alice = new User("Alice", "normal");
+        User bob = new User("Bob", "gold");
+        
+        bookazon.addUser(alice);
+        bookazon.addUser(bob);
 
+        // add books to cart
+        alice.addToCart(bookazon.catalog.get(0), 1);
+        alice.addToCart(bookazon.catalog.get(1), 2);
 
         // viewing the catalog in bookazon
         bookazon.viewCatalog();
 
         // viewing the users in bookazon
         bookazon.viewUsers();
-
 
         // view Alice's cart
         System.out.println("== Alice's Cart ==");
@@ -93,15 +95,13 @@ public class Bookazon {
         Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
         Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
 
-        // gets the addresses.
-        bookazon.users.get(0).setShippingAddress(shipping);
-        bookazon.users.get(0).setBillingAddress(billing);
+        alice.setShippingAddress(shipping);
+        alice.setBillingAddress(billing);
+
         // checkout
-        bookazon.users.get(0).checkout();
+        alice.checkout(new Order(alice.getCart(), alice.getSubscription()));
 
         // view order details
-        // bookazon.users.get(0).viewOrders();
-        bookazon.users.get(0).printOrdersWith(pM);
-        
+        alice.printOrdersWith(pM);
     }
 }

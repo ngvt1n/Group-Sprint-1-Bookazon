@@ -135,3 +135,20 @@ PR: **#14 — _Refactor: Pricing & Subscription via interfaces (+ cart/order fix
     for (CartItem it : items) subtotal += it.getTotalPrice();
     this.orderPrice = sub.price(subtotal, policy);            // delegate
   }
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+## Tenzin Thiley
+
+<p align="center">
+  Printer Interface, PrinterManager Class 
+</p>
+
+---
+
+## Problems Addressed By These Classes 
+- Eliminates *Feature Envy* from (`Book`, `User`, `Order`)
+
+
+

@@ -97,7 +97,6 @@ Organize a **Google Doc report** with the following sections, including screensh
 
  ## Rishit Chatterjee
  
- @@ -0,0 +1,38 @@
 <p align="center">
   <em>“SOLID Code”</em>
 </p>

@@ -2,12 +2,12 @@ import java.util.ArrayList;
 
 public class Bookazon {
 
-    private ArrayList<Book> books;
+    private ArrayList<AbstractMedia> catalog;
     private ArrayList<User> users;
     private PrintManager printManager;
 
     public Bookazon() {
-        books = new ArrayList<>();
+        catalog = new ArrayList<>();
         users = new ArrayList<>();
     }
 
@@ -15,17 +15,17 @@ public class Bookazon {
         this.printManager = pm;
     }
 
-    public void addBook(Book book) {
-        books.add(book);
+    public void addMedia(AbstractMedia media) {
+        catalog.add(media);
     }
 
     public void addUser(User user) {
         users.add(user);
     }
 
-    public void viewBooks() {
-        for (Book book : books) {
-            printManager.print(book);
+    public void viewCatalog() {
+        for (AbstractMedia media: catalog) {
+            printManager.print(media);
         }
     }
 
@@ -35,8 +35,8 @@ public class Bookazon {
         }
     }
 
-    public void removeBook(Book book) {
-        books.remove(book);
+    public void removeMedia(AbstractMedia media) {
+        catalog.remove(media);
     }
 
     public void removeUser(User user) {
@@ -54,28 +54,31 @@ public class Bookazon {
         PrintManager pM = new PrintManager();
         pM.register(CartItem.class, new CartItemPrinter());
         pM.register(Cart.class, new CartPrinter(pM));
+        pM.register(CD.class, new CDPrinter());
         pM.register(Order.class, new OrderPrinter());
+        pM.register(PhysicalBook.class, new PhysicalBookPrinter());
         pM.register(User.class, new UserPrinter());
         
         Bookazon bookazon = new Bookazon();
         bookazon.setPrintManager(pM);
         
-        // create books
-        bookazon.addBook(new PhysicalBook("The Great Gatsby", "F. Scott Fitzgerald", 1925, 9.99, true));
-        bookazon.addBook(new PhysicalBook("To Kill a Mockingbird", "Harper Lee", 1960, 7.99, false));
-        bookazon.addBook(new PhysicalBook("1984", "George Orwell", 1949, 8.99, true));
+        // create catalog of products
+        bookazon.addMedia(new PhysicalBook("The Great Gatsby", 9.99, "F. Scott Fitzgerald", 1925, true));
+        bookazon.addMedia(new PhysicalBook("To Kill a Mockingbird", 7.99, "Harper Lee", 1960, false));
+        bookazon.addMedia(new PhysicalBook("1984", 8.99, "George Orwell", 1949, true));
+        bookazon.addMedia(new CD("Kind of Blue", 14.99, "Miles Davis", 1959));
 
         // create users
         bookazon.addUser(new User("Alice", "normal"));
         bookazon.addUser(new User("Bob", "gold"));
 
-        // add books to cart
-        bookazon.users.get(0).addToCart(bookazon.books.get(0), 1);
-        bookazon.users.get(0).addToCart(bookazon.books.get(1), 2);
+        // add catalog to cart
+        bookazon.users.get(0).addToCart(bookazon.catalog.get(0), 1);
+        bookazon.users.get(0).addToCart(bookazon.catalog.get(1), 2);
 
 
-        // viewing the books in bookazon
-        bookazon.viewBooks();
+        // viewing the catalog in bookazon
+        bookazon.viewCatalog();
 
         // viewing the users in bookazon
         bookazon.viewUsers();

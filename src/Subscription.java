@@ -1,12 +1,10 @@
 /**
  * creator: rishit chatterjee
- * Customer subscription tier (e.g., "normal", "silver", "gold", "platinum").
- * Implementations should be immutable and normalize the code (e.g., lower-case).
+ * Customer subscription tier (e.g., normal, silver, gold, platinum).
+ * Implementations should be immutable.
  */
 public interface Subscription {
-  /** 
-   * Tiers. 
-   */
-  String code();
+  String code();                                   // e.g., "gold"
+  double price(double subtotal, PricingPolicy p);  // double-dispatch entry
 }
 

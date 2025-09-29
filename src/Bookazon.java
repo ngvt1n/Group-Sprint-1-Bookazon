@@ -49,7 +49,7 @@ public class Bookazon {
 
     
     public static void main(String[] args) {
-
+        
         // registering the different formatters for printing
         PrintManager pM = new PrintManager();
         pM.register(CartItem.class, new CartItemPrinter());
@@ -69,10 +69,8 @@ public class Bookazon {
         bookazon.addMedia(new CD("Kind of Blue", 14.99, "Miles Davis", 1959));
 
         // create users
-
         User alice = new User("Alice", "normal");
         User bob = new User("Bob", "gold");
-        
         bookazon.addUser(alice);
         bookazon.addUser(bob);
 
@@ -94,11 +92,12 @@ public class Bookazon {
         // set shipping address and billing address
         Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
         Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
-
+        AddressValidator.validate(shipping);
+        AddressValidator.validate(billing);
         alice.setShippingAddress(shipping);
         alice.setBillingAddress(billing);
 
-        // checkout
+        //Checkout.
         alice.checkout(new Order(alice.getCart(), alice.getSubscription()));
 
         // view order details

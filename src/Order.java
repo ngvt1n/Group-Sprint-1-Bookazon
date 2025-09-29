@@ -38,28 +38,40 @@ public class Order {
         this.orderStatus = status;
     }
 
+    public String getOrderStatus(){
+        return this.orderStatus;
+    }
+
     public void setDateCreated(String date) {
         this.dateCreated = date;
+    }
+
+    public String getDateCreated(){
+        return this.dateCreated;
     }
 
     public void setDateShipped(String date) {
         this.dateShipped = date;
     }
 
+    public String getDateShipped(){
+        return this.dateShipped;
+    }
+
     public void setUserName(String name) {
         this.userName = name;
     }
+    
+    public String getUserName(){
+        return this.userName;
+    }
 
-    public void printOrderDetails() {
-        System.out.println("Order Details:");
-        System.out.println("Date Created: " + dateCreated);
-        System.out.println("Date Shipped: " + dateShipped);
-        System.out.println("User Name: " + userName);
-        System.out.println("Order Status: " + orderStatus);
-        //THIS NEEDS TO IMPLEMENTED BY WHOEVER IS FIXING PRINTING.
-        //System.out.println("Shipping Address: " + (shippingAddress != null ? shippingAddress.formatForLabel() : "N/A"));
-        //System.out.println("Billing Address: " + (billingAddress != null ? billingAddress.formatForLabel() : "N/A"));
-        System.out.println("Order Price: $" + orderPrice);
+    public double getOrderPrice(){
+        return this.orderPrice;
+    }
+
+    public void printOrderDetails(PrintManager pm) {
+        pm.print(this);
     }
 
     public double calculatePrice(String subscription) {

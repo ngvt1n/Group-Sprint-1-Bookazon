@@ -21,5 +21,12 @@ public record Address(
     String city,
     String state,
     String zip,
-    String country
-) {}
+    String country) {
+        @Override
+        public String toString() {
+            return "Shipping Address: " + 
+            line1 + "\n" + 
+            line2 + "\n" + 
+            city + ", " + state + ", " + country +  " " + zip;
+        }
+    }

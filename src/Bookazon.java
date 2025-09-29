@@ -4,20 +4,16 @@ import java.util.ArrayList;
  * Application facade for the Bookazon demo.
  */
 public class Bookazon {
-
-import java.util.ArrayList;
-
-public class Bookazon {
     private ArrayList<AbstractMedia> catalog;
     private ArrayList<User> users;
     private PrintManager printManager;
 
     public Bookazon() {
-        catalog = new ArrayList<>();
-        users = new ArrayList<>();
+        this.catalog = new ArrayList<>();
+        this.users = new ArrayList<>();
     }
 
-    public void setPrintManager(PrintManager pm){
+    public void setPrintManager(PrintManager pm) {
         this.printManager = pm;
     }
 
@@ -30,7 +26,7 @@ public class Bookazon {
     }
 
     public void viewCatalog() {
-        for (AbstractMedia media: catalog) {
+        for (AbstractMedia media : catalog) {
             printManager.print(media);
         }
     }
@@ -49,7 +45,7 @@ public class Bookazon {
         users.remove(user);
     }
 
-    // Keep scope aligned with your refactor (no String mapping here)
+    // Keep scope aligned with the refactor (no String mapping here)
     public void updateRole(User user, Subscription sub) {
         user.setSubscription(sub);
     }
@@ -103,35 +99,4 @@ public class Bookazon {
         bookazon.users.get(0).checkout();
         bookazon.users.get(0).printOrdersWith(pM);
     }
-}
-
-    }
-  }
-
-  /** 
-  Remove a book. 
-  */
-  public void removeBook(AbstractBook book) {
-    books.remove(book);
-  }
-
-  /** 
-  Remove a user. 
-  */
-  public void removeUser(User user) {
-    users.remove(user);
-  }
-
-
-  public static void main(String[] args) {
-    Bookazon app = new Bookazon();
-
-    // Create PhysicalBook instances (match your project's constructor signature)
-    app.addBook(new PhysicalBook("The Great Gatsby", 9.99, "F. Scott Fitzgerald", 1925, true));
-    app.addBook(new PhysicalBook("To Kill a Mockingbird", 7.99, "Harper Lee", 1960, false));
-    app.addBook(new PhysicalBook("1984", 8.99, "George Orwell", 1949, true));
-
-    // Show books via PrintManager + PhysicalBookPrinter
-    app.viewBooks();
-  }
 }

@@ -1,5 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Handles order details (dates, user, addresses, items) and delegates pricing
+ * to Subscription + PricingPolicy. No string tier checks, no magic numbers.
+ */
 public class Order {
     private String dateCreated;
     private String dateShipped;
@@ -11,72 +16,46 @@ public class Order {
     private double orderPrice;
 
     public Order(Cart cart, Subscription subscription, PricingPolicy pricingPolicy) {
-    this.items = new java.util.ArrayList<>(cart.getItems()); // defensive copy
-    double subtotal = 0.0;
-    for (CartItem it : items) subtotal += it.getTotalPrice();
-    this.orderPrice = subscription.price(subtotal, pricingPolicy); // double-dispatch call
-}
+        // Defensive copy of cart items
+        this.items = new ArrayList<>(cart.getItems());
 
+        // Compute subtotal (pure aggregation)
+        double subtotal = 0.0;
+        for (CartItem it : items) {
+            subtotal += it.getTotalPrice();
+        }
 
-    public void setShippingAddress(Address address) {
-        //Sets shipping address.
-        this.shippingAddress = address;
+        // Delegate pricing (branch-free, policy-driven)
+        this.orderPrice = subscription.price(subtotal, pricingPolicy);
     }
 
-    public void setBillingAddress(Address address) {
-        //Sets billing address.
-        this.billingAddress = address;
-    }
+    // --- Addresses ---
+    public void setShippingAddress(Address address) { this.shippingAddress = address; }
+    public void setBillingAddress(Address address)  { this.billingAddress  = address; }
+    public Address getShippingAddress()             { return shippingAddress; }
+    public Address getBillingAddress()              { return billingAddress; }
 
-    public Address getBillingAddress() {
-        //Returns billing address. 
-        return billingAddress;
-    }
-    public Address getShippingAddress() {
-        //Returns Shipping address. 
-        return shippingAddress;
-    }
+    // --- Status / Dates / User ---
+    public void setOrderStatus(String status) { this.orderStatus = status; }
+    public String getOrderStatus()            { return this.orderStatus; }
 
-    public void setOrderStatus(String status) {
-        this.orderStatus = status;
-    }
+    public void setDateCreated(String date)   { this.dateCreated = date; }
+    public String getDateCreated()            { return this.dateCreated; }
 
-    public String getOrderStatus(){
-        return this.orderStatus;
-    }
+    public void setDateShipped(String date)   { this.dateShipped = date; }
+    public String getDateShipped()            { return this.dateShipped; }
 
-    public void setDateCreated(String date) {
-        this.dateCreated = date;
-    }
+    public void setUserName(String name)      { this.userName = name; }
+    public String getUserName()               { return this.userName; }
 
-    public String getDateCreated(){
-        return this.dateCreated;
-    }
+    // --- Items / Price ---
+    public double getOrderPrice()             { return this.orderPrice; }
 
-    public void setDateShipped(String date) {
-        this.dateShipped = date;
-    }
+    /** Optional: expose a copy so printers can render line items without mutation risk. */
+    public List<CartItem> getItems()          { return new ArrayList<>(items); }
 
-    public String getDateShipped(){
-        return this.dateShipped;
-    }
-
-    public void setUserName(String name) {
-        this.userName = name;
-    }
-    
-    public String getUserName(){
-        return this.userName;
-    }
-
-    public double getOrderPrice(){
-        return this.orderPrice;
-    }
-
+    // --- Printing ---
     public void printOrderDetails(PrintManager pm) {
         pm.print(this);
     }
-
 }
-
-    // calculatePrice() deleted

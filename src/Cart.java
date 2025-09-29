@@ -2,9 +2,15 @@ import java.util.ArrayList;
 
 public class Cart {
     private ArrayList<CartItem> items;
+    private PrintManager printManager;
     
     public Cart() {
         items = new ArrayList<>();
+
+    }
+
+    public void setPrintManager(PrintManager pM){
+        this.printManager = pM;
     }
     
     public void addItem(CartItem item) {
@@ -25,11 +31,7 @@ public class Cart {
     }
     
     public void viewCartDetails() {
-        System.out.println("Cart Details:");
-        for (CartItem item : items) {
-            System.out.println(item.getName() + " - Quantity: " + item.getQuantity());
-        }
-        System.out.println("\n");
+        printManager.print(this);
     }
     
     public ArrayList<CartItem> getItems() {

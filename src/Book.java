@@ -33,6 +33,10 @@ public abstract class Book {
         this.title = title;
     }
 
+    public boolean isPriceValid() {
+        return price > 0;
+    }
+  
     public void setAuthor(String author) {
         this.author = author;
     }

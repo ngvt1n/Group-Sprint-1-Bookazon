@@ -62,22 +62,32 @@ public class User {
         return shippingAddress;
     }
 
-    public void addToCart(Book book, int quantity) {
-        cart.addItem(new CartItem(book.getTitle(), book.getPrice(), quantity));
+    public void addToCart(AbstractMedia media, int quantity) {
+        cart.addItem(new CartItem(media.getTitle(), media.getPrice(), quantity));
     }
 
-    public void removeFromCart(Book book) {
+    public void removeFromCart(AbstractMedia media) {
         for (CartItem item : cart.getItems()) {
-            if (item.getName().equals(book.getTitle())) {
+            if (item.getName().equals(media.getTitle())) {
                 cart.getItems().remove(item);
                 break;
             }
         }
     }
 
-    public void viewOrders() {
+    public void viewOrders(PrintManager pm) {
         for (Order order : orders) {
-            order.printOrderDetails();
+            pm.print(order);
+        }
+    }
+
+    public void printCartWith(PrintManager pm) {
+        pm.print(cart); 
+    }
+
+    public void printOrdersWith(PrintManager pm) {
+        for (Order order : orders) {
+            pm.print(order); 
         }
     }
 
@@ -91,6 +101,4 @@ public class User {
     order.setDateCreated("2024-01-01");
     order.setUserName(this.name);
     orders.add(order);
-}
-
 }

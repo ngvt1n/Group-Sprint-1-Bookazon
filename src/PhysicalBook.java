@@ -1,8 +1,8 @@
-public class PhysicalBook extends Book {
+public class PhysicalBook extends AbstractBook {
     protected boolean isPaperback;
 
-    public PhysicalBook(String title, String author, int yearPublished, double price, boolean isPaperback) {
-        super(title, author, yearPublished, price);
+    public PhysicalBook(String title, double price, String author, int yearPublished, boolean isPaperback) {
+        super(title, price, author, yearPublished);
         this.isPaperback = isPaperback;
     }
 
@@ -12,12 +12,5 @@ public class PhysicalBook extends Book {
 
     public void setPaperback(boolean isPaperback) {
         this.isPaperback = isPaperback;
-    }
-
-    @Override
-    public void displayInfo() {
-        System.out.println("📖 Physical Book: " + title + " by " + author +
-                           " (" + yearPublished + "), $" + price +
-                           (isPaperback ? " [Paperback]" : " [Hardcover]"));
     }
 }

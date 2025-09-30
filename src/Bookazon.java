@@ -83,13 +83,15 @@ public class Bookazon {
         // pricing setup
         PricingPolicy policy = new TablePricingPolicy();
 
-        // users (choose your concrete Subscription types)
-        bookazon.addUser(new User("Alice", new NormalSubscription(), policy));
-        bookazon.addUser(new User("Bob",   new GoldSubscription(),   policy));
+        // users (explicit variables, not list indexing)
+        User alice = new User("Alice", new NormalSubscription(), policy);
+        User bob   = new User("Bob",   new GoldSubscription(),   policy);
+        bookazon.addUser(alice);
+        bookazon.addUser(bob);
 
-        // add to cart (assumes User.addToCart(AbstractMedia,int) exists)
-        bookazon.users.get(0).addToCart(bookazon.catalog.get(0), 1);
-        bookazon.users.get(0).addToCart(bookazon.catalog.get(1), 2);
+        // add to Alice's cart (assumes addToCart(AbstractMedia,int) exists)
+        alice.addToCart(bookazon.catalog.get(0), 1);
+        alice.addToCart(bookazon.catalog.get(1), 2);
 
         // view
         bookazon.viewCatalog();
@@ -97,17 +99,17 @@ public class Bookazon {
 
         // Alice’s cart
         System.out.println("== Alice's Cart ==");
-        bookazon.users.get(0).printCartWith(pM);
+        alice.printCartWith(pM);
         System.out.println();
 
-        // addresses
+        // addresses for Alice
         Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
         Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
-        bookazon.users.get(0).setShippingAddress(shipping);
-        bookazon.users.get(0).setBillingAddress(billing);
+        alice.setShippingAddress(shipping);
+        alice.setBillingAddress(billing);
 
-        // checkout + orders
-        bookazon.users.get(0).checkout();
-        bookazon.users.get(0).printOrdersWith(pM);
+        // checkout + orders (no-arg checkout that uses Subscription + PricingPolicy)
+        alice.checkout();
+        alice.printOrdersWith(pM);
     }
 }

@@ -1,48 +1,48 @@
 /**
  * Class Name: Bookazon.java
  *
- * Description: Controller of the Bookazon system. Manages the media catalog 
- *              and users, delegates printing to a PrintManager, and supports 
- *              adding, removing, viewing, and updating records. 
- *
+ * Description: Controller of the Bookazon system. Manages the media catalog
+ *              and users, delegates printing to a PrintManager, and supports
+ *              adding, removing, viewing, and updating records.
  */
 
 import java.util.ArrayList;
 
+/**
+ * Application facade for the Bookazon demo.
+ */
 public class Bookazon {
-
     private ArrayList<AbstractMedia> catalog;
     private ArrayList<User> users;
     private PrintManager printManager;
 
     public Bookazon() {
-        catalog = new ArrayList<>();
-        users = new ArrayList<>();
+        this.catalog = new ArrayList<>();
+        this.users = new ArrayList<>();
     }
 
-    public void setPrintManager(PrintManager pm){
+    public void setPrintManager(PrintManager pm) {
         this.printManager = pm;
     }
 
     public void addMedia(AbstractMedia media) {
-        //adds media to the catalog.
+        // adds media to the catalog.
         catalog.add(media);
     }
 
     public void addUser(User user) {
-        //adds users to the user list.
+        // adds users to the user list.
         users.add(user);
     }
 
     public void viewCatalog() {
-        //prints the media of the catalogue.
-        for (AbstractMedia media: catalog) {
+        for (AbstractMedia media : catalog) {
             printManager.print(media);
         }
     }
 
     public void viewUsers() {
-        //prints the users of the user list. 
+        // prints the users of the user list.
         for (User user : users) {
             printManager.print(user);
         }
@@ -56,15 +56,13 @@ public class Bookazon {
         users.remove(user);
     }
 
-    public void updateRole(User user, String role) {
-        //sets the subsription for the inputed user. 
-        user.setSubscription(role);
+    // Keep scope aligned with the refactor (no String mapping here)
+    public void updateRole(User user, Subscription sub) {
+        user.setSubscription(sub);
     }
 
-    
     public static void main(String[] args) {
-        
-        // registering the different formatters for printing
+        // register printers
         PrintManager pM = new PrintManager();
         pM.register(CartItem.class, new CartItemPrinter());
         pM.register(Cart.class, new CartPrinter(pM));
@@ -72,49 +70,44 @@ public class Bookazon {
         pM.register(Order.class, new OrderPrinter());
         pM.register(PhysicalBook.class, new PhysicalBookPrinter());
         pM.register(User.class, new UserPrinter());
-        
+
         Bookazon bookazon = new Bookazon();
         bookazon.setPrintManager(pM);
-        
-        // create catalog of products
+
+        // catalog
         bookazon.addMedia(new PhysicalBook("The Great Gatsby", 9.99, "F. Scott Fitzgerald", 1925, true));
         bookazon.addMedia(new PhysicalBook("To Kill a Mockingbird", 7.99, "Harper Lee", 1960, false));
         bookazon.addMedia(new PhysicalBook("1984", 8.99, "George Orwell", 1949, true));
         bookazon.addMedia(new CD("Kind of Blue", 14.99, "Miles Davis", 1959));
 
-        // create users
-        User alice = new User("Alice", "normal");
-        User bob = new User("Bob", "gold");
-        bookazon.addUser(alice);
-        bookazon.addUser(bob);
+        // pricing setup
+        PricingPolicy policy = new TablePricingPolicy();
 
-        // add books to cart
-        alice.addToCart(bookazon.catalog.get(0), 1);
-        alice.addToCart(bookazon.catalog.get(1), 2);
+        // users (choose your concrete Subscription types)
+        bookazon.addUser(new User("Alice", new NormalSubscription(), policy));
+        bookazon.addUser(new User("Bob",   new GoldSubscription(),   policy));
 
-        // viewing the catalog in bookazon
+        // add to cart (assumes User.addToCart(AbstractMedia,int) exists)
+        bookazon.users.get(0).addToCart(bookazon.catalog.get(0), 1);
+        bookazon.users.get(0).addToCart(bookazon.catalog.get(1), 2);
+
+        // view
         bookazon.viewCatalog();
-
-        // viewing the users in bookazon
         bookazon.viewUsers();
 
-        // view Alice's cart
+        // Alice’s cart
         System.out.println("== Alice's Cart ==");
         bookazon.users.get(0).printCartWith(pM);
         System.out.println();
 
-        // set shipping address and billing address
+        // addresses
         Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
         Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
-        AddressValidator.validate(shipping);
-        AddressValidator.validate(billing);
-        alice.setShippingAddress(shipping);
-        alice.setBillingAddress(billing);
+        bookazon.users.get(0).setShippingAddress(shipping);
+        bookazon.users.get(0).setBillingAddress(billing);
 
-        //checkout.
-        alice.checkout(new Order(alice.getCart(), alice.getSubscription()));
-
-        //view order details
-        alice.printOrdersWith(pM);
+        // checkout + orders
+        bookazon.users.get(0).checkout();
+        bookazon.users.get(0).printOrdersWith(pM);
     }
 }

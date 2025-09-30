@@ -108,9 +108,6 @@ public class Bookazon {
         alice.setShippingAddress(shipping);
         alice.setBillingAddress(billing);
 
-        // checkout + orders (no-arg checkout that uses Subscription + PricingPolicy)
-        alice.checkout();
-
         // DIP-style checkout: construct Order outside User and pass it in
         Order orderForAlice = new Order(alice.getCart(), alice.getSubscription(), policy);
         alice.checkout(orderForAlice);

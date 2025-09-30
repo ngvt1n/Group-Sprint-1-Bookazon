@@ -163,14 +163,14 @@ PR: **#14 — _Refactor: Pricing & Subscription via interfaces (+ cart/order fix
 - Ex Usage: 
    `public class CDPrinter implements Printer<CD> {`
   
-   `@Override`
-  ` public void printFormat(CD cd){`
-      `System.out.println("Title: " + cd.getTitle());`
-     ` System.out.println("Artist: " + cd.getArtist());`
-    `  System.out.println("Year: " + cd.getYear());`
-     ` System.out.println("Price: $" + cd.getPrice());`
-    `  System.out.println();`
-   `}`
+      `@Override`
+   `  public void printFormat(CD cd){`\n
+         `System.out.println("Title: " + cd.getTitle());`\n
+      ` System.out.println("Artist: " + cd.getArtist());`\n
+      `  System.out.println("Year: " + cd.getYear());`\n
+      ` System.out.println("Price: $" + cd.getPrice());`\n
+      `  System.out.println();`\n
+      `}`
    `}`
 
 - This Printer interface has been implemented in `CartItemPrinter`, `CartPrinter`, `CDPrinter` `PhysicalBookPrinter`, and `UserPrinter`
@@ -181,13 +181,13 @@ PR: **#14 — _Refactor: Pricing & Subscription via interfaces (+ cart/order fix
 - `PrintManager` creates a hashmap that stores the each type of printer(format) that is registered and finds the printer for the particular class. 
 - Ex Usage:
       - Registering the `Printer` type: 
-         `PrintManager pM = new PrintManager();`
-         `pM.register(CartItem.class, new CartItemPrinter());`
+         `PrintManager pM = new PrintManager();`\n
+         `pM.register(CartItem.class, new CartItemPrinter());`\n
 
       - Using the print method in `PrintManager`: 
-         `public void viewUsers() {`
-           ` for (User user : users) {`
-            `   printManager.print(user);`
+         `public void viewUsers() {`\n
+           ` for (User user : users) {`\n
+            `   printManager.print(user);`\n
           `  }`
          `}`
 

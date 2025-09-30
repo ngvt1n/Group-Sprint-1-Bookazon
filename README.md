@@ -190,8 +190,9 @@ The `Printer<T>` interface defines a single responsibility: formatting and print
     for (User user : users) {
         printManager.print(user);
     }
-  } 
+  }
 
+  Link to UML diagrams: https://lucid.app/lucidspark/8d4466c0-098b-4cd5-9ad8-150349eedea5/edit?viewport_loc=5698%2C-1730%2C17270%2C7668%2C0_0&invitationId=inv_66f96ba5-4442-4e44-85fd-b77898b79e68
 
 ---
 

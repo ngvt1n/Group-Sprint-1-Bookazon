@@ -35,13 +35,24 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    // checks to see if the given item is the item being checked for
-    public boolean equals(CartItem item) {
-        return this.itemName.equals(item.getName());
-    }
+@Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof CartItem)) return false;
+    CartItem other = (CartItem) o;
+    return itemName != null ? itemName.equals(other.itemName) : other.itemName == null;
+}
 
-    // calculating total price for this item 
-    public double getTotalPrice() {
-        return price * quantity;
-    }
+/*
+ * Collections (e.g., ArrayList.remove) call equals(Object),
+ * so we must override it and also provide a matching hashCode.
+ */
+@Override
+public int hashCode() {
+    return itemName != null ? itemName.hashCode() : 0;
+}
+
+public double getTotalPrice() {
+    return price * quantity;
+}
 }

@@ -26,10 +26,12 @@ public class Bookazon {
     }
 
     public void addMedia(AbstractMedia media) {
+        // adds media to the catalog.
         catalog.add(media);
     }
 
     public void addUser(User user) {
+        // adds users to the user list.
         users.add(user);
     }
 
@@ -40,6 +42,7 @@ public class Bookazon {
     }
 
     public void viewUsers() {
+        // prints the users of the user list.
         for (User user : users) {
             printManager.print(user);
         }
@@ -102,16 +105,17 @@ public class Bookazon {
         // addresses for Alice
         Address shipping = new Address("123 Main St", "", "Springfield", "IL", "62701", "USA");
         Address billing  = new Address("456 Elm St", "", "Springfield", "IL", "62702", "USA");
-
-        // validate before setting
-        AddressValidator.validate(shipping);
-        AddressValidator.validate(billing);
-
         alice.setShippingAddress(shipping);
         alice.setBillingAddress(billing);
 
-        // checkout + orders
+        // checkout + orders (no-arg checkout that uses Subscription + PricingPolicy)
         alice.checkout();
+
+        // DIP-style checkout: construct Order outside User and pass it in
+        Order orderForAlice = new Order(alice.getCart(), alice.getSubscription(), policy);
+        alice.checkout(orderForAlice);
+
+        // print orders
         alice.printOrdersWith(pM);
     }
 }

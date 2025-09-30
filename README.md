@@ -139,7 +139,7 @@ PR: **#14 — _Refactor: Pricing & Subscription via interfaces (+ cart/order fix
 
 -------------------------------------------------------------------------------------------------------------------------------------------
 
-## Tenzin Thiley
+## Tenzin Thinley
 
 <p align="center">
   Printer Interface, PrinterManager Class 
@@ -148,7 +148,51 @@ PR: **#14 — _Refactor: Pricing & Subscription via interfaces (+ cart/order fix
 ---
 
 ## Problems Addressed By These Classes 
-- Eliminates *Feature Envy* from (`Book`, `User`, `Order`)
+- Eliminates *Feature Envy* and *Duplicate Codes* from all the classes: `Book`, `User`, `Order`, `Bookazon`, and `Cart`
+   - `Book` has methods: `printBookDetails()` uses `System.out.println()` to print each of the book details
+   - `Bookazon` has methods: `viewBooks()` uses `printBookDetails()`, and `viewUsers()` method which calls `System.out.println()` to directly print
+   - `User` has methods: `viewCart()` calls `viewCartDetails()`, and `viewOrder()` which uses `printOrderDetails()`
+   - `Order` has methods: `printOrderMethods()` calls `System.out.println()` to print out order details. 
+   - `Cart` has methods: `viewCartDetails` calls `System.out.println()` to print out card details.
+
+
+---
+
+## What Printer Interface Does 
+-  `Printer` interface has the method `printFormat(T bookazonClassType)` which will be used to individualize the print statements to each unique class
+- Ex Usage: 
+   `public class CDPrinter implements Printer<CD> {`
+  
+      `@Override`
+   `  public void printFormat(CD cd){`\n
+         `System.out.println("Title: " + cd.getTitle());`\n
+      ` System.out.println("Artist: " + cd.getArtist());`\n
+      `  System.out.println("Year: " + cd.getYear());`\n
+      ` System.out.println("Price: $" + cd.getPrice());`\n
+      `  System.out.println();`\n
+      `}`
+   `}`
+
+- This Printer interface has been implemented in `CartItemPrinter`, `CartPrinter`, `CDPrinter` `PhysicalBookPrinter`, and `UserPrinter`
+---
+
+## What PrintManager Does 
+
+- `PrintManager` creates a hashmap that stores the each type of printer(format) that is registered and finds the printer for the particular class. 
+- Ex Usage:
+      - Registering the `Printer` type: 
+         `PrintManager pM = new PrintManager();`\n
+         `pM.register(CartItem.class, new CartItemPrinter());`\n
+
+      - Using the print method in `PrintManager`: 
+         `public void viewUsers() {`\n
+           ` for (User user : users) {`\n
+            `   printManager.print(user);`\n
+          `  }`
+         `}`
+
+---
+
 
 
 

@@ -2,6 +2,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Customer aggregate: holds cart, subscription, addresses.
+ * Checkout accepts a prebuilt Order (DIP: creation is outside User).
+ */
 public class User {
     private String name;
     private Subscription subscription;
@@ -20,48 +24,24 @@ public class User {
         this.orders = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
+    public Subscription getSubscription() { return subscription; }
+    public void setSubscription(Subscription sub) { this.subscription = sub; }
+    /** Expose policy so callers can build an Order without a factory. */
+    public PricingPolicy getPricingPolicy() { return pricingPolicy; }
+    public Cart getCart() { return this.cart; }
 
-    public Subscription getSubscription() {
-        return subscription;
-    }
-
-    public void setSubscription(Subscription sub) {
-        this.subscription = sub;
-    }
-
-    public void viewCart() {
-        cart.viewCartDetails();
-    }
-
-    public void setShippingAddress(Address address) {
-        this.shippingAddress = address;
-    }
-
-    public void setBillingAddress(Address address) {
-        this.billingAddress = address;
-    }
-
-    public Address getBillingAddress() {
-        return billingAddress;
-    }
-
-    public Address getShippingAddress() {
-        return shippingAddress;
-    }
+    public void viewCart() { cart.viewCartDetails(); }
+    public void setShippingAddress(Address address) { this.shippingAddress = address; }
+    public void setBillingAddress(Address address) { this.billingAddress = address; }
+    public Address getShippingAddress() { return shippingAddress; }
+    public Address getBillingAddress() { return billingAddress; }
 
     public void addToCart(AbstractMedia media, int quantity) {
         cart.addItem(new CartItem(media.getTitle(), media.getPrice(), quantity));
     }
 
-    public Cart getCart() {
-        return this.cart;
-    }
-
     public void removeFromCart(AbstractMedia media) {
-        // Use iterator to avoid ConcurrentModificationException
         Iterator<CartItem> it = cart.getItems().iterator();
         while (it.hasNext()) {
             CartItem item = it.next();
@@ -72,29 +52,22 @@ public class User {
         }
     }
 
-    public void viewOrders(PrintManager pm) {
-        for (Order order : orders) {
-            pm.print(order);
+    public void printCartWith(PrintManager pm) { pm.print(cart); }
+    public void printOrdersWith(PrintManager pm) { for (Order o : orders) pm.print(o); }
+
+    /**
+     * Checkout by enriching a prebuilt Order and recording it.
+     * Validates that addresses exist and order is non-null.
+     */
+    public void checkout(Order order) {
+        if (order == null) {
+            System.out.println("Error: order cannot be null.");
+            return;
         }
-    }
-
-    public void printCartWith(PrintManager pm) {
-        pm.print(cart);
-    }
-
-    public void printOrdersWith(PrintManager pm) {
-        for (Order order : orders) {
-            pm.print(order);
-        }
-    }
-
-    // Unified checkout: requires addresses to be set; creates Order using policy/tier.
-    public void checkout() {
         if (shippingAddress == null || billingAddress == null) {
             System.out.println("Error: Shipping and billing addresses must be set before checkout.");
             return;
         }
-        Order order = new Order(cart, this.subscription, this.pricingPolicy);
         order.setShippingAddress(shippingAddress);
         order.setBillingAddress(billingAddress);
         order.setOrderStatus("Order Placed");
